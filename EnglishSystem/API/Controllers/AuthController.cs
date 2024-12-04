@@ -76,5 +76,30 @@ namespace EnglishSystem.API.Controllers
             }
             return BadRequest("Wrong");
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("assign-role")]
+        public async Task<IActionResult> AssignRole([FromBody] AssignRoleRequest request)
+        {
+            var result = await _userService.AssignRoleToUserAsync(request.UserId!, request.RoleName!);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("users-with-roles")]
+        [Authorize(Roles = "Admin")] 
+        public async Task<IActionResult> GetUsersWithRoles()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Something go wrong");
+            }
+            var getUsers = await _userService.GetUsersWithRoles();
+            return Ok(getUsers);
+        }
     }
 }

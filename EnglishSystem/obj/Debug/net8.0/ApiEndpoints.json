@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "EnglishSystem.API.Controllers.AuthController",
+    "Method": "AssignRole",
+    "RelativePath": "api/Auth/assign-role",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "EnglishSystem.Domain.Entities.AssignRoleRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnglishSystem.API.Controllers.AuthController",
     "Method": "DeleteUser",
     "RelativePath": "api/Auth/delete",
     "HttpMethod": "DELETE",
@@ -55,6 +71,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnglishSystem.API.Controllers.AuthController",
+    "Method": "GetUsersWithRoles",
+    "RelativePath": "api/Auth/users-with-roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]
