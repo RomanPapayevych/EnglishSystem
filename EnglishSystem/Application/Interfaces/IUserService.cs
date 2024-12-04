@@ -11,5 +11,7 @@ namespace EnglishSystem.Application.Interfaces
         bool isUniqueUser(string name);
         string GenerateToken(LoginDTO loginDTO);
         Task<OperationResult> DeleteUser(string name);
+        Task<OperationResult> AssignRoleToUserAsync(string userId, string roleName);
+        Task<List<UserWithRolesDTO>> GetUsersWithRoles();
     }
 }

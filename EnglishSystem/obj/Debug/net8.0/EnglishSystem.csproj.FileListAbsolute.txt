@@ -147,3 +147,4 @@ D:\C# ASP.NET Core course\EnglishSystem\EnglishSystem\obj\Debug\net8.0\refint\En
 D:\C# ASP.NET Core course\EnglishSystem\EnglishSystem\obj\Debug\net8.0\EnglishSystem.pdb
 D:\C# ASP.NET Core course\EnglishSystem\EnglishSystem\obj\Debug\net8.0\EnglishSystem.genruntimeconfig.cache
 D:\C# ASP.NET Core course\EnglishSystem\EnglishSystem\obj\Debug\net8.0\ref\EnglishSystem.dll
+D:\C# ASP.NET Core course\EnglishSystem\EnglishSystem\obj\Debug\net8.0\EnglishSystem.sourcelink.json

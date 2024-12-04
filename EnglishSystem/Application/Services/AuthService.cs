@@ -3,11 +3,14 @@ using EnglishSystem.Application.DTOs;
 using EnglishSystem.Application.Interfaces;
 using EnglishSystem.Domain.Entities;
 using EnglishSystem.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -28,6 +31,68 @@ namespace EnglishSystem.Application.Services
             _roleManager = roleManager;
             _configuration = configuration;
             _context = context;
+        }
+        public async Task<OperationResult> AssignRoleToUserAsync(string userId, string newRole)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new OperationResult
+                {
+                    Succeeded = false,
+                    Message = "User not found"
+                };
+            }
+            var roleExists = await _roleManager.RoleExistsAsync(newRole);
+            if (!roleExists)
+            {
+                var role = new ApplicationRole { Name = newRole };
+                var createRoleResult = await _roleManager.CreateAsync(role);
+
+                if (!createRoleResult.Succeeded)
+                {
+                    return new OperationResult
+                    {
+                        Succeeded = false,
+                        Message = "Failed to create role",
+                        Errors = createRoleResult.Errors.Select(e => e.Description).ToList()
+                    };
+                }
+            }
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            if (currentRoles.Contains(newRole))
+            {
+                return new OperationResult
+                {
+                    Succeeded = true,
+                    Message = $"User already has the {newRole} role"
+                };
+            }
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            if (!removeResult.Succeeded)
+            {
+                return new OperationResult
+                {
+                    Succeeded = false,
+                    Message = "Failed to remove current roles",
+                    Errors = removeResult.Errors.Select(e => e.Description).ToList()
+                };
+            }
+            var addResult = await _userManager.AddToRoleAsync(user, newRole);
+            if (!addResult.Succeeded)
+            {
+                return new OperationResult
+                {
+                    Succeeded = false,
+                    Message = "Failed to add new role",
+                    Errors = addResult.Errors.Select(e => e.Description).ToList()
+                };
+            }
+            return new OperationResult
+            {
+                Succeeded = true,
+                Message = $"Role changed to {newRole} successfully"
+            };
         }
 
         public async Task<OperationResult> DeleteUser(string name)
@@ -169,6 +234,25 @@ namespace EnglishSystem.Application.Services
                 };
             }
 
+        }
+        public async Task<List<UserWithRolesDTO>> GetUsersWithRoles()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var userRoles = new List<UserWithRolesDTO>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+
+                userRoles.Add(new UserWithRolesDTO
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Roles = roles.ToList()
+                });
+            }
+            return userRoles;
         }
     }
 }
