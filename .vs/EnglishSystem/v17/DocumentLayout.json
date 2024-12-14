@@ -38,8 +38,7 @@
               "RelativeToolTip": "EnglishSystem\\API\\Controllers\\StudentController.cs",
               "ViewState": "AgIAADsAAAAAAAAAAAAAAE4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T16:07:00.624Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-12T16:07:00.624Z"
             },
             {
               "$type": "Document",
@@ -51,8 +50,7 @@
               "RelativeToolTip": "EnglishSystem\\Application\\Interfaces\\IStudentService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T15:36:04.298Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-12T15:36:04.298Z"
             },
             {
               "$type": "Document",
@@ -62,7 +60,7 @@
               "RelativeDocumentMoniker": "EnglishSystem\\Application\\Services\\StudentService.cs",
               "ToolTip": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\Application\\Services\\StudentService.cs",
               "RelativeToolTip": "EnglishSystem\\Application\\Services\\StudentService.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAawCMAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-12T15:36:01.402Z",
               "EditorCaption": ""
