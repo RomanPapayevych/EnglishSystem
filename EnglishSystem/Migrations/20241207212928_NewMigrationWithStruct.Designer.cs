@@ -4,6 +4,7 @@ using EnglishSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnglishSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241207212928_NewMigrationWithStruct")]
+    partial class NewMigrationWithStruct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,14 +179,9 @@ namespace EnglishSystem.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EnglishLevelId");
-
-                    b.HasIndex("TeacherId");
 
                     b.ToTable("Groups");
                 });
@@ -211,7 +209,8 @@ namespace EnglishSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LessonId");
+                    b.HasIndex("LessonId")
+                        .IsUnique();
 
                     b.ToTable("Homework");
                 });
@@ -227,18 +226,15 @@ namespace EnglishSystem.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("LessonDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ScheduleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Topic")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ScheduleId");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Lessons");
                 });
@@ -251,23 +247,15 @@ namespace EnglishSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("DaysOfWeek")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
 
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupId")
-                        .IsUnique();
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Schedules");
                 });
@@ -383,8 +371,7 @@ namespace EnglishSystem.Migrations
 
                     b.HasOne("EnglishSystem.Domain.Entities.Group", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("GroupId");
 
                     b.Navigation("EnglishLevel");
 
@@ -399,21 +386,14 @@ namespace EnglishSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EnglishSystem.Domain.Entities.ApplicationUser", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("EnglishLevel");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("EnglishSystem.Domain.Entities.Homework", b =>
                 {
                     b.HasOne("EnglishSystem.Domain.Entities.Lesson", "Lesson")
-                        .WithMany("HomeworkAssignments")
-                        .HasForeignKey("LessonId")
+                        .WithOne("Homework")
+                        .HasForeignKey("EnglishSystem.Domain.Entities.Homework", "LessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -422,20 +402,20 @@ namespace EnglishSystem.Migrations
 
             modelBuilder.Entity("EnglishSystem.Domain.Entities.Lesson", b =>
                 {
-                    b.HasOne("EnglishSystem.Domain.Entities.Schedule", "Schedule")
-                        .WithMany("Lessons")
-                        .HasForeignKey("ScheduleId")
+                    b.HasOne("EnglishSystem.Domain.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Schedule");
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("EnglishSystem.Domain.Entities.Schedule", b =>
                 {
                     b.HasOne("EnglishSystem.Domain.Entities.Group", "Group")
-                        .WithOne("Schedule")
-                        .HasForeignKey("EnglishSystem.Domain.Entities.Schedule", "GroupId")
+                        .WithMany("ScheduleDays")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -500,20 +480,14 @@ namespace EnglishSystem.Migrations
 
             modelBuilder.Entity("EnglishSystem.Domain.Entities.Group", b =>
                 {
-                    b.Navigation("Schedule")
-                        .IsRequired();
+                    b.Navigation("ScheduleDays");
 
                     b.Navigation("Students");
                 });
 
             modelBuilder.Entity("EnglishSystem.Domain.Entities.Lesson", b =>
                 {
-                    b.Navigation("HomeworkAssignments");
-                });
-
-            modelBuilder.Entity("EnglishSystem.Domain.Entities.Schedule", b =>
-                {
-                    b.Navigation("Lessons");
+                    b.Navigation("Homework");
                 });
 #pragma warning restore 612, 618
         }

@@ -56,6 +56,9 @@ builder.Services.AddSwaggerGen(options =>
 
 
 builder.Services.AddScoped<IUserService, AuthService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -94,7 +97,10 @@ builder.Services.AddAuthorization(options =>
 });
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
