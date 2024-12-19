@@ -95,9 +95,9 @@ namespace EnglishSystem.Application.Services
             };
         }
 
-        public async Task<OperationResult> DeleteUser(string name)
+        public async Task<OperationResult> DeleteUser(int id)
         {
-            var user = await _userManager.FindByNameAsync(name);
+            var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
                 return new OperationResult

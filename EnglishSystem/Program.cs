@@ -95,6 +95,16 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("Admin", "true");
     });
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(options =>
+    {
+        options.WithOrigins("http://localhost:5173");
+        options.AllowAnyHeader();
+        options.AllowAnyMethod();
+    });
+});
 // Add services to the container.
 
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -115,6 +125,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthentication();
 

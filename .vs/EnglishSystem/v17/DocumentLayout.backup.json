@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\C# ASP.NET Core course\\EnglishSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|d:\\c# asp.net core course\\englishsystem\\englishsystem\\application\\services\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|solutionrelative:englishsystem\\application\\services\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|d:\\c# asp.net core course\\englishsystem\\englishsystem\\application\\services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|solutionrelative:englishsystem\\application\\services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|d:\\c# asp.net core course\\englishsystem\\englishsystem\\application\\interfaces\\istudentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|solutionrelative:englishsystem\\application\\interfaces\\istudentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|d:\\c# asp.net core course\\englishsystem\\englishsystem\\api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|solutionrelative:englishsystem\\api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|d:\\c# asp.net core course\\englishsystem\\englishsystem\\api\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|solutionrelative:englishsystem\\api\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|d:\\c# asp.net core course\\englishsystem\\englishsystem\\application\\interfaces\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51AACC04-12CA-4493-BDDE-46A272856656}|EnglishSystem\\EnglishSystem.csproj|solutionrelative:englishsystem\\application\\interfaces\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,41 +30,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "StudentController.cs",
-              "DocumentMoniker": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\API\\Controllers\\StudentController.cs",
-              "RelativeDocumentMoniker": "EnglishSystem\\API\\Controllers\\StudentController.cs",
-              "ToolTip": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\API\\Controllers\\StudentController.cs",
-              "RelativeToolTip": "EnglishSystem\\API\\Controllers\\StudentController.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAAAE4AAAAJAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\API\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "EnglishSystem\\API\\Controllers\\AdminController.cs",
+              "ToolTip": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\API\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "EnglishSystem\\API\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAswE0AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T16:07:00.624Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-17T17:05:42.571Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "IStudentService.cs",
-              "DocumentMoniker": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\Application\\Interfaces\\IStudentService.cs",
-              "RelativeDocumentMoniker": "EnglishSystem\\Application\\Interfaces\\IStudentService.cs",
-              "ToolTip": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\Application\\Interfaces\\IStudentService.cs",
-              "RelativeToolTip": "EnglishSystem\\Application\\Interfaces\\IStudentService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABlAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "IAdminService.cs",
+              "DocumentMoniker": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\Application\\Interfaces\\IAdminService.cs",
+              "RelativeDocumentMoniker": "EnglishSystem\\Application\\Interfaces\\IAdminService.cs",
+              "ToolTip": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\Application\\Interfaces\\IAdminService.cs",
+              "RelativeToolTip": "EnglishSystem\\Application\\Interfaces\\IAdminService.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAApwA0AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T15:36:04.298Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-18T22:55:34.727Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "StudentService.cs",
-              "DocumentMoniker": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\Application\\Services\\StudentService.cs",
-              "RelativeDocumentMoniker": "EnglishSystem\\Application\\Services\\StudentService.cs",
-              "ToolTip": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\Application\\Services\\StudentService.cs",
-              "RelativeToolTip": "EnglishSystem\\Application\\Services\\StudentService.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAawCMAAAAJAAAAAAAAAA==",
+              "Title": "AdminService.cs",
+              "DocumentMoniker": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\Application\\Services\\AdminService.cs",
+              "RelativeDocumentMoniker": "EnglishSystem\\Application\\Services\\AdminService.cs",
+              "ToolTip": "D:\\C# ASP.NET Core course\\EnglishSystem\\EnglishSystem\\Application\\Services\\AdminService.cs",
+              "RelativeToolTip": "EnglishSystem\\Application\\Services\\AdminService.cs",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAjwFkAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T15:36:01.402Z",
+              "WhenOpened": "2024-12-17T17:05:48.935Z",
               "EditorCaption": ""
             }
           ]

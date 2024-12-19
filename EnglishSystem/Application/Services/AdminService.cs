@@ -4,6 +4,7 @@ using EnglishSystem.Application.DTOs;
 using EnglishSystem.Application.Interfaces;
 using EnglishSystem.Domain.Entities;
 using EnglishSystem.Infrastructure.Data;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace EnglishSystem.Application.Services
@@ -83,9 +84,23 @@ namespace EnglishSystem.Application.Services
                 Data = deleteGroup
             };
         }
-        public async Task<List<Group>> GetAllGroupsAsync()
+        public async Task<List<GroupDTO>> GetAllGroupsAsync()
         {
-            return await _context.Groups.ToListAsync();
+            var groups = await _context.Groups.Include(g => g.Schedule).Include(g => g.EnglishLevel).Include(g => g.Teacher).ToListAsync();
+            var result = groups.Select(group => new GroupDTO
+            {
+                Id = group.Id,
+                Name = group.Name!,
+                StartTime = group.StartTime,
+                EndTime = group.EndTime,
+                EnglishLevelId = group.EnglishLevelId,
+                EnglishLevel = group.EnglishLevel?.Level,
+                Teacher = group.Teacher != null ? new { group.Teacher.Id, group.Teacher.FirstName, group.Teacher.LastName } : null,
+                DaysOfWeek = group.Schedule.DaysOfWeek.Select(day => day.ToString()).ToList()
+            }).ToList();
+
+            return result;
+            //return await _context.Groups.ToListAsync();
         }
         public async Task<OperationResult> CreateLevelAsync(string name)
         {

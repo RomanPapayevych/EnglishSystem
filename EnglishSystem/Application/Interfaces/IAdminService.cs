@@ -12,7 +12,7 @@ namespace EnglishSystem.Application.Interfaces
         Task<EnglishLevel> GetLevelByIdAsync(int levelId);
         Task<OperationResult> CreateGroupAsync(CreateGroupDTO model);
         Task<OperationResult> DeleteGroupAsync(int groupId);
-        Task<List<Group>> GetAllGroupsAsync();
+        Task<List<GroupDTO>> GetAllGroupsAsync();
         //Task<OperationResult> CreateScheduleAsync(CreateScheduleDTO model);
         //Task<IEnumerable<Schedule>> GetScheduleAsync();
     }

@@ -118,15 +118,15 @@
   {
     "ContainingType": "EnglishSystem.API.Controllers.AuthController",
     "Method": "DeleteUser",
-    "RelativePath": "api/Auth/delete",
+    "RelativePath": "api/Auth/delete/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "name",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

@@ -65,13 +65,13 @@ namespace EnglishSystem.API.Controllers
             await _signInManager.SignOutAsync();
             return Ok("Logout");
         }
-        [HttpDelete("delete")]
+        [HttpDelete("delete/{id}")]
         [Authorize]
-        public async Task<IActionResult> DeleteUser(string name)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             if (ModelState.IsValid)
             {
-                var delete = await _userService.DeleteUser(name);
+                var delete = await _userService.DeleteUser(id);
                 return Ok(delete);
             }
             return BadRequest("Wrong");

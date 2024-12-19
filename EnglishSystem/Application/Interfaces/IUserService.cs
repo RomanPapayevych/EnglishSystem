@@ -10,7 +10,7 @@ namespace EnglishSystem.Application.Interfaces
         Task<OperationResult> LoginAsync(LoginDTO loginDTO);
         bool isUniqueUser(string name);
         string GenerateToken(LoginDTO loginDTO);
-        Task<OperationResult> DeleteUser(string name);
+        Task<OperationResult> DeleteUser(int id);
         Task<OperationResult> AssignRoleToUserAsync(string userId, string roleName);
         Task<List<UserWithRolesDTO>> GetUsersWithRoles();
     }
