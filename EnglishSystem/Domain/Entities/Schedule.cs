@@ -8,9 +8,7 @@ namespace EnglishSystem.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        //public DayOfWeek DayOfWeek { get; set; } // Enum: Monday, Tuesday, etc.
-        //public ICollection<DayOfWeek> DaysOfWeek { get; set; } = new List<DayOfWeek>(); // Список днів занять
-        public List<DayOfWeek> DaysOfWeek { get; set; } = new List<DayOfWeek>();
+        public List<DayOfWeek>? DaysOfWeek { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
@@ -19,6 +17,6 @@ namespace EnglishSystem.Domain.Entities
         public int GroupId { get; set; }
 
         [JsonIgnore]
-        public ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
+        public ICollection<Lesson>? Lessons { get; set; }
     }
 }

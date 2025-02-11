@@ -8,16 +8,9 @@ namespace EnglishSystem.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        // Дата та час уроку
         public DateTime LessonDateTime { get; set; }
         public string? Topic { get; set; }
         public string? Description { get; set; }
-
-        // Група, для якої створено урок
-        //[ForeignKey("GroupId")]
-        //public Group Group { get; set; } = null!;
-        //public int GroupId { get; set; }
-
         [ForeignKey("ScheduleId")]
         public Schedule Schedule { get; set; } = null!;
         public int ScheduleId { get; set; }

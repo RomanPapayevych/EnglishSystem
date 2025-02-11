@@ -4,12 +4,13 @@ using EnglishSystem.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace EnglishSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
         private readonly IAdminService _adminService;
@@ -17,7 +18,7 @@ namespace EnglishSystem.API.Controllers
         {
             _adminService = adminService;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("CreateLevel")]
         public async Task<IActionResult> CreateEnglishLevel(string name)
         {
@@ -34,6 +35,7 @@ namespace EnglishSystem.API.Controllers
         }
 
         [HttpGet("AllLevels")]
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> GetAllLevelsAsync()
         {
             var result = await _adminService.GetAllLevelsAsync();
@@ -41,6 +43,7 @@ namespace EnglishSystem.API.Controllers
         }
 
         [HttpGet("EnglishLevelById")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllLevelsAsync(int levelId)
         {
             var result = await _adminService.GetLevelByIdAsync(levelId);
@@ -48,6 +51,7 @@ namespace EnglishSystem.API.Controllers
         }
 
         [HttpDelete("DeleteEnglishLevel/{levelId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteEnglishLevel(int levelId)
         {
             var result = await _adminService.DeleteLevelAsync(levelId);
@@ -55,6 +59,7 @@ namespace EnglishSystem.API.Controllers
         }
 
         [HttpPost("CreateGroup")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateGroup([FromBody] CreateGroupDTO model)
         {
             var result = await _adminService.CreateGroupAsync(model);
@@ -66,6 +71,7 @@ namespace EnglishSystem.API.Controllers
         }
 
         [HttpDelete("DeleteGroup/{groupId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteGroup(int groupId)
         {
             var result = await _adminService.DeleteGroupAsync(groupId);

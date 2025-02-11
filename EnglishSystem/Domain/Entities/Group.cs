@@ -12,7 +12,7 @@ namespace EnglishSystem.Domain.Entities
         public string? Name { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public Schedule Schedule { get; set; } = null!;
         [ForeignKey("EnglishLevelId")]
         public EnglishLevel EnglishLevel { get; set; } = null!;
