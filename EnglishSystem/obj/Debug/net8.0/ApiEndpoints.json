@@ -185,6 +185,22 @@
   },
   {
     "ContainingType": "EnglishSystem.API.Controllers.StudentController",
+    "Method": "GetLessonsWithHomeworkAsync",
+    "RelativePath": "api/Student/{groupId}/GetLesson",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnglishSystem.API.Controllers.StudentController",
     "Method": "GetOutFromGroup",
     "RelativePath": "api/Student/{groupId}/GetOut/{studentId}",
     "HttpMethod": "DELETE",
@@ -200,27 +216,6 @@
         "Name": "studentId",
         "Type": "System.Int32",
         "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "EnglishSystem.API.Controllers.StudentController",
-    "Method": "GetLessonsWithHomeworkAsync",
-    "RelativePath": "api/Student/{studentId}/GetLesson",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "studentId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "lessonDate",
-        "Type": "System.DateTime",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -251,6 +246,22 @@
     "Parameters": [
       {
         "Name": "englishLevelId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnglishSystem.API.Controllers.StudentController",
+    "Method": "MyGroup",
+    "RelativePath": "api/Student/MyGroup/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -291,8 +302,8 @@
   },
   {
     "ContainingType": "EnglishSystem.API.Controllers.TeacherController",
-    "Method": "RemoveTeacherFromGroup",
-    "RelativePath": "api/Teacher/{groupId}/RemoveTeacherFromGroup",
+    "Method": "AddLesson",
+    "RelativePath": "api/Teacher/{groupId}/Lesson",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -300,6 +311,64 @@
       {
         "Name": "groupId",
         "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "EnglishSystem.Application.DTOs.LessonDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnglishSystem.API.Controllers.TeacherController",
+    "Method": "RemoveTeacherFromGroup",
+    "RelativePath": "api/Teacher/{groupId}/RemoveTeacherFromGroup",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnglishSystem.API.Controllers.TeacherController",
+    "Method": "RemoveHomework",
+    "RelativePath": "api/Teacher/{homeworkId}/RemoveHomework",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "homeworkId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnglishSystem.API.Controllers.TeacherController",
+    "Method": "UpdateHomework",
+    "RelativePath": "api/Teacher/{homeworkId}/UpdateHomework",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "homeworkId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "EnglishSystem.Application.DTOs.HomeworkDTO",
         "IsRequired": true
       }
     ],
@@ -344,14 +413,14 @@
   },
   {
     "ContainingType": "EnglishSystem.API.Controllers.TeacherController",
-    "Method": "AddLesson",
-    "RelativePath": "api/Teacher/{scheduleId}/Lesson",
-    "HttpMethod": "POST",
+    "Method": "UpdateLesson",
+    "RelativePath": "api/Teacher/{lessonId}/UpdateLesson",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "scheduleId",
+        "Name": "lessonId",
         "Type": "System.Int32",
         "IsRequired": true
       },
@@ -381,6 +450,16 @@
   },
   {
     "ContainingType": "EnglishSystem.API.Controllers.TeacherController",
+    "Method": "AvaibleGroups",
+    "RelativePath": "api/Teacher/AvaibleGroups",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnglishSystem.API.Controllers.TeacherController",
     "Method": "CreateGroup",
     "RelativePath": "api/Teacher/CreateGroup",
     "HttpMethod": "POST",
@@ -390,6 +469,22 @@
       {
         "Name": "model",
         "Type": "EnglishSystem.Application.DTOs.CreateGroupDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnglishSystem.API.Controllers.TeacherController",
+    "Method": "GetLessonstOfGroup",
+    "RelativePath": "api/Teacher/LessonsOfGroup/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

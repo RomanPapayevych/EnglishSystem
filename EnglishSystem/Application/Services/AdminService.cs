@@ -29,7 +29,7 @@ namespace EnglishSystem.Application.Services
                     Errors = new List<string>()
                 };
             }   
-            if(model.DaysOfWeek.Count == 0 || model.DaysOfWeek.Count > 7)
+            if(model.DaysOfWeek!.Count == 0 || model.DaysOfWeek.Count > 7)
             {
                 return new OperationResult
                 {
@@ -41,21 +41,22 @@ namespace EnglishSystem.Application.Services
             var schedule = new Schedule
             {
                 DaysOfWeek = model.DaysOfWeek,
-                StartTime = model.StartTime,
-                EndTime = model.EndTime
+                StartTime = model.StartTimeOfLesson,
+                EndTime = model.EndTimeOfLesson
             };
             var group = new Group
             {
                 Name = model.Name,
-                StartTime = schedule.StartTime,
-                EndTime = schedule.EndTime,
+                StartTime = model.StartTime,
+                EndTime = model.EndTime,
                 EnglishLevel = englishLevel,
                 Schedule = schedule,
             };
-            //group.Schedule = schedule;
-            _context.Schedules.Add(schedule);
             _context.Groups.Add(group);
             await _context.SaveChangesAsync();
+
+            //_context.Schedules.Add(schedule);
+            //await _context.SaveChangesAsync();
             return new OperationResult
             {
                 Succeeded = true,
@@ -93,14 +94,15 @@ namespace EnglishSystem.Application.Services
                 Name = group.Name!,
                 StartTime = group.StartTime,
                 EndTime = group.EndTime,
+                StartTimeOfLesson = group.Schedule.StartTime,
+                EndTimeOfLesson = group.Schedule.EndTime,
                 EnglishLevelId = group.EnglishLevelId,
                 EnglishLevel = group.EnglishLevel?.Level,
                 Teacher = group.Teacher != null ? new { group.Teacher.Id, group.Teacher.FirstName, group.Teacher.LastName } : null,
-                DaysOfWeek = group.Schedule.DaysOfWeek.Select(day => day.ToString()).ToList()
+                DaysOfWeek = group.Schedule.DaysOfWeek?.Select(day => day.ToString()).ToList() ?? new List<string>()
             }).ToList();
 
             return result;
-            //return await _context.Groups.ToListAsync();
         }
         public async Task<OperationResult> CreateLevelAsync(string name)
         {

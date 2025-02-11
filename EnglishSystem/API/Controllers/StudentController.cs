@@ -20,6 +20,10 @@ namespace EnglishSystem.API.Controllers
         [HttpPost("SetEnglishLevel")]
         public async Task<IActionResult> SetEnglishLevel([FromBody] SetEnglishLevelDTO model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var result = await _studentService.SetEnglishLevelAsync(model.UserId, model.EnglishLevelId);
             if (!result.Succeeded)
             {
@@ -38,16 +42,17 @@ namespace EnglishSystem.API.Controllers
             }
             return Ok(groups);
         }
-        //[HttpPost("assign-group")]
-        //public async Task<IActionResult> AssignGroup([FromBody] AssignGroupDTO model)
-        //{
-        //    var result = await _studentService.AssignGroupToUserAsync(model.UserId, model.GroupId);
-        //    if (!result.Succeeded)
-        //    {
-        //        return BadRequest(result.Errors);
-        //    }
-        //    return Ok(new { message = "Group assigned successfully" });
-        //}
+
+        [HttpGet("MyGroup/{userId}")]
+        public async Task<IActionResult> MyGroup(int userId)
+        {
+            var result = await _studentService.MyGroup(userId);
+            if(result == null)
+            {
+                return BadRequest("Student not found in any group");
+            }
+            return Ok(result);
+        }
 
         [HttpPost("ChooseGroup")]
         public async Task<IActionResult> ChooseGroup([FromBody] ChooseGroupDTO model)
@@ -71,10 +76,10 @@ namespace EnglishSystem.API.Controllers
             return Ok(new { message = "You come out successfully" });
         }
 
-        [HttpGet("{studentId}/GetLesson")]
-        public async Task<IActionResult> GetLessonsWithHomeworkAsync(int studentId, DateTime lessonDate)
+        [HttpGet("{groupId}/GetLesson")]
+        public async Task<IActionResult> GetLessonsWithHomeworkAsync(int groupId)
         {
-            var result = await _studentService.GetLessonsWithHomeworkAsync(studentId, lessonDate);
+            var result = await _studentService.GetLessonsWithHomeworkAsync(groupId);
             return Ok(result);
         }
     }

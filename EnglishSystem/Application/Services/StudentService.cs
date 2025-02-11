@@ -34,10 +34,23 @@ namespace EnglishSystem.Application.Services
             var result = await _context.SaveChangesAsync();
             return result > 0 ? IdentityResult.Success : IdentityResult.Failed(new IdentityError { Description = "Failed to assign group" });
         }
-        public async Task<List<Group>> GetAvailableGroupsAsync(int englishLevelId)
+        public async Task<List<GroupDTO>> GetAvailableGroupsAsync(int englishLevelId)
         {
-            var groups = await _context.Groups.Where(g => g.EnglishLevelId == englishLevelId).ToListAsync();
-            return groups;
+            var groups = await _context.Groups.Where(g => g.EnglishLevelId == englishLevelId).Include(c => c.EnglishLevel).Include(g => g.Teacher).Include(c => c.Schedule).ToListAsync();
+            var result = groups.Select(group => new GroupDTO
+            {
+                Id = group.Id,
+                Name = group.Name!,
+                StartTime = group.StartTime,
+                EndTime = group.EndTime,
+                StartTimeOfLesson = group.Schedule.StartTime,
+                EndTimeOfLesson = group.Schedule.EndTime,
+                EnglishLevelId = group.EnglishLevelId,
+                EnglishLevel = group.EnglishLevel?.Level,
+                Teacher = group.Teacher != null ? new { group.Teacher.Id, group.Teacher.FirstName, group.Teacher.LastName } : null,
+                DaysOfWeek = group.Schedule.DaysOfWeek?.Select(day => day.ToString()).ToList() ?? new List<string>()
+            }).ToList();
+            return result;
         }
         public async Task<IdentityResult> SetEnglishLevelAsync(int userId, int englishLevelId)
         {
@@ -87,32 +100,78 @@ namespace EnglishSystem.Application.Services
             };
         }
 
-        public async Task<LessonWithHomeworkDTO> GetLessonsWithHomeworkAsync(int studentId, DateTime lessonDate)
+        public async Task<List<NormalLessonWithHomeworkDTO>> GetLessonsWithHomeworkAsync(int groupId)
         {
-            var student = await _context.Users.Include(u => u.Group).ThenInclude(g => g!.Schedule).ThenInclude(g => g.Lessons).FirstOrDefaultAsync(u => u.Id == studentId);
-            if (student == null)
+            //var student = await _context.Users.Include(u => u.Group).ThenInclude(g => g!.Schedule).ThenInclude(g => g.Lessons).FirstOrDefaultAsync(u => u.Id == studentId);
+            //if (student == null)
+            //{
+            //    throw new Exception("Student not found");
+            //}
+            //var lesson = await _context.Lessons.Include(l => l.HomeworkAssignments).Include(l => l.Schedule).Where(l => l.Schedule.Group.Students!.Any(s => s.Id == studentId)).FirstOrDefaultAsync();
+            //if (lesson == null)
+            //{
+            //    throw new Exception("Lesson not found on this date");
+            //}
+            //var lessonWithHomeworkDto =  new LessonWithHomeworkDTO
+            //{
+            //    LessonId = lesson.Id,
+            //    LessonDateTime = lesson.LessonDateTime,
+            //    Topic = lesson.Topic,
+            //    Description = lesson.Description,
+            //    Homework = lesson.HomeworkAssignments.Select(h => new HomeworkDTO
+            //    {
+            //        Id = h.Id,
+            //        Content = h.Content!,
+            //    }).ToList()
+            //};
+
+            //return lessonWithHomeworkDto;
+            var group = await _context.Groups.Include(g => g.Schedule).ThenInclude(s => s.Lessons)!.ThenInclude(l => l.HomeworkAssignments).FirstOrDefaultAsync(g => g.Id == groupId);
+            if (group == null)
             {
-                throw new Exception("Student not found");
+                throw new Exception("Group not found");
             }
-            var lesson = await _context.Lessons.Include(l => l.HomeworkAssignments).Include(l => l.Schedule).Where(l => l.Schedule.Group.Students!.Any(s => s.Id == studentId) && l.LessonDateTime.Date == lessonDate.Date).FirstOrDefaultAsync();
-            if (lesson == null)
+            var lesson = group!.Schedule.Lessons?.Select(l => new NormalLessonWithHomeworkDTO
             {
-                throw new Exception("Lesson not found on this date");
-            }
-            var lessonWithHomeworkDto = new LessonWithHomeworkDTO
-            {
-                LessonId = lesson.Id,
-                LessonDateTime = lesson.LessonDateTime,
-                Topic = lesson.Topic,
-                Description = lesson.Description,
-                Homework = lesson.HomeworkAssignments.Select(h => new HomeworkDTO
+                Id = l.Id,
+                Date = l.LessonDateTime,
+                Topic = l.Topic,
+                Description = l.Description,
+                Homework = l.HomeworkAssignments.Select(hw => new HomeworkDTO
                 {
-                    Content = h.Content!,
+                    Id = hw.Id,
+                    Content = hw.Content!
                 }).ToList()
-            };
+            }).ToList();
+            return lesson!;
 
-            return lessonWithHomeworkDto;
+        }
 
+        public async Task<GroupDTO> MyGroup(int userId)
+        {
+            var group = await _context.Groups.Where(g => g.Students!.Any(s => s.Id == userId)).Select(g => new GroupDTO
+            {
+                Id = g.Id,
+                Name = g.Name!,
+                StartTime = g.Schedule!.StartTime,
+                EndTime = g.Schedule.EndTime,
+                StartTimeOfLesson = g.Schedule.StartTime,
+                EndTimeOfLesson = g.Schedule.EndTime,
+                EnglishLevelId = g.EnglishLevelId,
+                EnglishLevel = g.EnglishLevel.Level,
+                Teacher = g.Teacher != null ? new
+                {
+                    g.Teacher.Id,
+                    g.Teacher.FirstName,
+                    g.Teacher.LastName
+                } : null,
+                DaysOfWeek = g.Schedule.DaysOfWeek!.Select(day => day.ToString()).ToList()
+            }).FirstOrDefaultAsync();
+            if (group == null)
+            {
+                return null!;
+            }
+            return group;
         }
     }
 }
