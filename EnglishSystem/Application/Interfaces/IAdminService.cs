@@ -7,7 +7,7 @@ namespace EnglishSystem.Application.Interfaces
     public interface IAdminService
     {
         Task<List<EnglishLevel>> GetAllLevelsAsync();
-        Task<OperationResult> CreateLevelAsync(string name);
+        Task<OperationResult> CreateLevelAsync(string name, string description, IFormFile imageFile);
         Task<OperationResult> DeleteLevelAsync(int levelId);
         Task<EnglishLevel> GetLevelByIdAsync(int levelId);
         Task<OperationResult> CreateGroupAsync(CreateGroupDTO model);

@@ -24,6 +24,7 @@
   <ItemGroup>
     <Folder Include="Domain\Interfaces\" />
     <Folder Include="Infrastructure\Repositories\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

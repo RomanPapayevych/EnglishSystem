@@ -1,6 +1,7 @@
 ﻿using EnglishSystem.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EnglishSystem.Infrastructure.Data
 {
@@ -10,11 +11,17 @@ namespace EnglishSystem.Infrastructure.Data
         {
             
         }
+
         public DbSet<EnglishLevel> EnglishLevel { get; set; }
+        
         public DbSet<Group> Groups { get; set; }
+        
         public DbSet<Schedule> Schedules { get; set; }
+        
         public DbSet<Homework> Homework { get; set; }
+        
         public DbSet<Lesson> Lessons { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

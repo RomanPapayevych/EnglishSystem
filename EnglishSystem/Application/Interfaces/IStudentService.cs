@@ -14,5 +14,7 @@ namespace EnglishSystem.Application.Interfaces
         Task<GroupDTO> MyGroup(int userId);
         Task<OperationResult> GetOutFromGroup(int groupId, int studentId);
         Task<List<NormalLessonWithHomeworkDTO>> GetLessonsWithHomeworkAsync(int groupId);
+
+        Task<UserDTO> GetUserByIdAsync(int userId);
     }
 }

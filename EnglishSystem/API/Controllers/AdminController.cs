@@ -20,13 +20,14 @@ namespace EnglishSystem.API.Controllers
         }
         [Authorize(Roles = "Admin")]
         [HttpPost("CreateLevel")]
-        public async Task<IActionResult> CreateEnglishLevel(string name)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> CreateEnglishLevel([FromForm] string name, [FromForm] string? description, [FromForm] IFormFile? imageFile)
         {
             if (string.IsNullOrEmpty(name))
             {
                 return BadRequest("Name is blank");
             }
-            var result = await _adminService.CreateLevelAsync(name);
+            var result = await _adminService.CreateLevelAsync(name, description!, imageFile!);
             if (!result.Succeeded)
             {
                 return BadRequest("Level is already exists");

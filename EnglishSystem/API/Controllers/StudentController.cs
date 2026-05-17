@@ -1,8 +1,5 @@
 ﻿using EnglishSystem.Application.DTOs;
 using EnglishSystem.Application.Interfaces;
-using EnglishSystem.Domain.Entities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishSystem.API.Controllers
@@ -80,6 +77,13 @@ namespace EnglishSystem.API.Controllers
         public async Task<IActionResult> GetLessonsWithHomeworkAsync(int groupId)
         {
             var result = await _studentService.GetLessonsWithHomeworkAsync(groupId);
+            return Ok(result);
+        }
+
+        [HttpGet("GetUserById/{userId}")]
+        public async Task<IActionResult> GetUserById(int userId)
+        {
+            var result = await _studentService.GetUserByIdAsync(userId);
             return Ok(result);
         }
     }

@@ -12,9 +12,11 @@ namespace EnglishSystem.Application.Services
     public class AdminService : IAdminService
     {
         private readonly ApplicationDbContext _context;
-        public AdminService(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _env;
+        public AdminService(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
        
         public async Task<OperationResult> CreateGroupAsync(CreateGroupDTO model)
@@ -104,7 +106,7 @@ namespace EnglishSystem.Application.Services
 
             return result;
         }
-        public async Task<OperationResult> CreateLevelAsync(string name)
+        public async Task<OperationResult> CreateLevelAsync(string name, string description, IFormFile imageFile)
         {
             var checkLevel = await _context.EnglishLevel.FirstOrDefaultAsync(c => c.Level == name);
             if (checkLevel != null)
@@ -115,7 +117,30 @@ namespace EnglishSystem.Application.Services
                     Message = "Level is already created"
                 };
             }
-            var newLevel = new EnglishLevel { Level = name };
+            string? imageUrl = null;
+            if(imageFile !=null && imageFile.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(_env.WebRootPath, "images");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(fileStream);
+                }
+
+                imageUrl = $"/images/{fileName}";
+            }
+            var newLevel = new EnglishLevel 
+            {
+                Level = name,
+                Description = description,
+                ImageUrl = imageUrl
+            };  
             await _context.EnglishLevel.AddAsync(newLevel);
             await _context.SaveChangesAsync();
             return new OperationResult

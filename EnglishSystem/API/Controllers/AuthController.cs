@@ -43,11 +43,6 @@ namespace EnglishSystem.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            //bool ifUnique = _userService.isUniqueUser(registerDTO.FirstName!);
-            //if (!ifUnique)
-            //{
-            //    return BadRequest("Username already exist");
-            //}
             var register = await _userService.RegisterAsync(registerDTO);
             if (!register.Succeeded)
             {

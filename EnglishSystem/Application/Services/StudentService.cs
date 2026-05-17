@@ -11,12 +11,15 @@ namespace EnglishSystem.Application.Services
     public class StudentService : IStudentService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        
         private readonly ApplicationDbContext _context;
+        
         public StudentService(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
+
         public async Task<IdentityResult> ChooseGroupAsync(int userId, int groupId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
@@ -91,6 +94,7 @@ namespace EnglishSystem.Application.Services
                     Errors = new List<string>()
                 };
             }
+            student.EnglishLevelId = null;
             group.Students?.Remove(student);
             await _context.SaveChangesAsync();
             return new OperationResult
@@ -173,5 +177,25 @@ namespace EnglishSystem.Application.Services
             }
             return group;
         }
+
+        public async Task<UserDTO> GetUserByIdAsync(int userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            
+            if(user == null)
+            {
+                return null!;
+            }
+
+            return new UserDTO
+            {
+                Id = user.Id,
+                FirstName = user.FirstName!,
+                LastName = user.LastName!,
+                Email = user.Email!,
+                PhoneNumber = user.PhoneNumber!
+            };
+        }
+
     }
 }

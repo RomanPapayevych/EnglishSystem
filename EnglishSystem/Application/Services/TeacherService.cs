@@ -50,7 +50,12 @@ namespace EnglishSystem.Application.Services
         }
         public async Task<IEnumerable<GroupDTO>> TeacherGroupsAsync(int teacherId)
         {
-            var groups = await _context.Groups.Where(t => t.TeacherId == teacherId).Include(g => g.Schedule).Include(g => g.EnglishLevel).Include(g => g.Teacher).ToListAsync();
+            var groups = await _context.Groups.Where(t => t.TeacherId == teacherId)
+                .Include(g => g.Schedule)
+                .Include(g => g.EnglishLevel)
+                .Include(g => g.Teacher)
+                .ToListAsync();
+            
             var result = groups.Select(group => new GroupDTO
             {
                 Id = group.Id,
@@ -62,7 +67,9 @@ namespace EnglishSystem.Application.Services
                 EnglishLevelId = group.EnglishLevelId,
                 EnglishLevel = group.EnglishLevel?.Level,
                 Teacher = group.Teacher != null ? new { group.Teacher.Id, group.Teacher.FirstName, group.Teacher.LastName } : null,
-                DaysOfWeek = group.Schedule.DaysOfWeek?.Select(day => day.ToString()).ToList() ?? new List<string>()
+                DaysOfWeek = group.Schedule.DaysOfWeek?
+                    .Select(day => day.ToString())
+                    .ToList() ?? new List<string>()
             }).ToList();
 
             return result;

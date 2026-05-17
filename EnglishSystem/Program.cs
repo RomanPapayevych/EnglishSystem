@@ -22,11 +22,6 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-//builder.Services.AddControllers().AddJsonOptions(options =>
-//{
-//    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-//});
-
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -127,6 +122,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors();
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 
