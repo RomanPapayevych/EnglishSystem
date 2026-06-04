@@ -56,24 +56,65 @@ namespace EnglishSystem.Application.Services
                 .Include(g => g.Teacher)
                 .ToListAsync();
             
-            var result = groups.Select(group => new GroupDTO
-            {
-                Id = group.Id,
-                Name = group.Name!,
-                StartTime = group.StartTime,
-                EndTime = group.EndTime,
-                StartTimeOfLesson = group.Schedule.StartTime,
-                EndTimeOfLesson = group.Schedule.EndTime,
-                EnglishLevelId = group.EnglishLevelId,
-                EnglishLevel = group.EnglishLevel?.Level,
-                Teacher = group.Teacher != null ? new { group.Teacher.Id, group.Teacher.FirstName, group.Teacher.LastName } : null,
-                DaysOfWeek = group.Schedule.DaysOfWeek?
-                    .Select(day => day.ToString())
-                    .ToList() ?? new List<string>()
-            }).ToList();
+            var result = groups.Select(MapToGroupDTO).ToList();
 
             return result;
         }
+
+        public async Task<GroupDTO?> GetGroupByIdAsync(int groupId)
+        {
+            var group = await _context.Groups
+                .Include(g => g.Schedule)
+                .Include(g => g.EnglishLevel)
+                .Include(g => g.Teacher)
+                .FirstOrDefaultAsync(g => g.Id == groupId);
+
+            return group == null ? null : MapToGroupDTO(group);
+        }
+
+        public async Task<OperationResult> SetGroupZoomLinkAsync(int groupId, string? zoomLink)
+        {
+            var group = await _context.Groups.FirstOrDefaultAsync(g => g.Id == groupId);
+            if (group == null)
+            {
+                return new OperationResult
+                {
+                    Succeeded = false,
+                    Message = "Group not found",
+                    Errors = new List<string>()
+                };
+            }
+
+            group.ZoomLink = string.IsNullOrWhiteSpace(zoomLink) ? null : zoomLink.Trim();
+            _context.Groups.Update(group);
+            await _context.SaveChangesAsync();
+
+            var updatedGroup = await GetGroupByIdAsync(groupId);
+
+            return new OperationResult
+            {
+                Succeeded = true,
+                Message = "Zoom link saved successfully",
+                Data = updatedGroup
+            };
+        }
+
+        private static GroupDTO MapToGroupDTO(Group group) => new()
+        {
+            Id = group.Id,
+            Name = group.Name!,
+            StartTime = group.StartTime,
+            EndTime = group.EndTime,
+            StartTimeOfLesson = group.Schedule.StartTime,
+            EndTimeOfLesson = group.Schedule.EndTime,
+            EnglishLevelId = group.EnglishLevelId,
+            EnglishLevel = group.EnglishLevel?.Level,
+            Teacher = group.Teacher != null ? new { group.Teacher.Id, group.Teacher.FirstName, group.Teacher.LastName } : null,
+            DaysOfWeek = group.Schedule.DaysOfWeek?
+                .Select(day => day.ToString())
+                .ToList() ?? new List<string>(),
+            ZoomLink = group.ZoomLink
+        };
         public async Task<OperationResult> RemoveTeacherFromGroup(int groupId)
         {
             var group = await _context.Groups.FindAsync(groupId);
@@ -197,19 +238,7 @@ namespace EnglishSystem.Application.Services
         public async Task<List<GroupDTO>> GetAllGroupsAsync()
         {
             var groups = await _context.Groups.Include(g => g.Schedule).Include(g => g.EnglishLevel).Include(g => g.Teacher).ToListAsync();
-            var availableGroups = groups.Where(group => group.Teacher == null).Select(group => new GroupDTO
-            {
-                Id = group.Id,
-                Name = group.Name!,
-                StartTime = group.StartTime,
-                EndTime = group.EndTime,
-                StartTimeOfLesson = group.Schedule!.StartTime,
-                EndTimeOfLesson = group.Schedule.EndTime,
-                EnglishLevelId = group.EnglishLevelId,
-                EnglishLevel = group.EnglishLevel?.Level,
-                Teacher = group.Teacher != null ? new { group.Teacher.Id, group.Teacher.FirstName, group.Teacher.LastName } : null,
-                DaysOfWeek = group.Schedule.DaysOfWeek?.Select(day => day.ToString()).ToList() ?? new List<string>()
-            }).ToList();
+            var availableGroups = groups.Where(group => group.Teacher == null).Select(MapToGroupDTO).ToList();
 
             return availableGroups;
         }

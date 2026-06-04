@@ -14,5 +14,6 @@ namespace EnglishSystem.Application.DTOs
         public string? EnglishLevel { get; set; }
         public object? Teacher { get; set; } 
         public List<string> DaysOfWeek { get; set; } = new();
+        public string? ZoomLink { get; set; }
     }
 }

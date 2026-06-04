@@ -101,7 +101,8 @@ namespace EnglishSystem.Application.Services
                 EnglishLevelId = group.EnglishLevelId,
                 EnglishLevel = group.EnglishLevel?.Level,
                 Teacher = group.Teacher != null ? new { group.Teacher.Id, group.Teacher.FirstName, group.Teacher.LastName } : null,
-                DaysOfWeek = group.Schedule.DaysOfWeek?.Select(day => day.ToString()).ToList() ?? new List<string>()
+                DaysOfWeek = group.Schedule.DaysOfWeek?.Select(day => day.ToString()).ToList() ?? new List<string>(),
+                ZoomLink = group.ZoomLink
             }).ToList();
 
             return result;

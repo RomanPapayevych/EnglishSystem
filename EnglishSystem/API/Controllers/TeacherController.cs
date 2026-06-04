@@ -69,6 +69,28 @@ namespace EnglishSystem.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("Group/{groupId}")]
+        public async Task<IActionResult> GetGroupById(int groupId)
+        {
+            var group = await _teacherService.GetGroupByIdAsync(groupId);
+            if (group == null)
+            {
+                return NotFound("Group not found");
+            }
+            return Ok(group);
+        }
+
+        [HttpPut("{groupId}/ZoomLink")]
+        public async Task<IActionResult> SetZoomLink(int groupId, [FromBody] SetZoomLinkDTO model)
+        {
+            var result = await _teacherService.SetGroupZoomLinkAsync(groupId, model.ZoomLink);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
 
         //--------Lesson-------------
 

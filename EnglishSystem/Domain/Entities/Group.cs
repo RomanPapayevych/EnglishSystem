@@ -22,6 +22,8 @@ namespace EnglishSystem.Domain.Entities
         public ApplicationUser? Teacher { get; set; }
         public int? TeacherId { get; set; }
 
+        public string? ZoomLink { get; set; }
+
         [JsonIgnore]
         public ICollection<ApplicationUser>? Students { get; set; }
     }

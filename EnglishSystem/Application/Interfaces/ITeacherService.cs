@@ -13,6 +13,8 @@ namespace EnglishSystem.Application.Interfaces
         Task<IEnumerable<GroupDTO>> TeacherGroupsAsync(int teacherId);
         Task<List<GroupDTO>> GetAllGroupsAsync();
         Task<OperationResult> RemoveTeacherFromGroup(int groupId);
+        Task<GroupDTO?> GetGroupByIdAsync(int groupId);
+        Task<OperationResult> SetGroupZoomLinkAsync(int groupId, string? zoomLink);
 
         //--------------GetStudents----------------
         Task<List<ApplicationUser>> GetStudentsByGroupId(int groupId);
